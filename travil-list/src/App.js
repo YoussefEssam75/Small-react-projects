@@ -1,13 +1,15 @@
 import { useState } from "react";
+
 export default function App() {
   const [items, setItems] = useState([]);
-  function handeleAddItem(item) {
+
+  function handleAddItem(item) {
     setItems((items) => [...items, item]);
   }
   return (
     <div className="app">
       <Logo />
-      <Form onAddItems={handeleAddItem} />
+      <Form onAddItems={handleAddItem} />
       <PackingList items={items} />
       <Stats />
     </div>
@@ -18,13 +20,15 @@ function Logo() {
   return <h1>🌴 Far Away 💼</h1>;
 }
 
-function Form(onAddItems) {
+function Form({ onAddItems }) {
   const [description, setDescription] = useState("");
   const [quantity, setQuantity] = useState(1);
 
   function handleSubmit(e) {
     e.preventDefault();
+
     if (!description) return;
+
     const newitem = { description, quantity, packed: false, id: Date.now() };
     onAddItems(newitem);
     setDescription("");
