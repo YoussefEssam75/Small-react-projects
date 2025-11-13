@@ -39,10 +39,10 @@ export default function PackingList({
       <div className="actions">
         <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
           <option value="input">Sort by input order</option>
-          <option value="description">Sort by description</option>
-          <option value="packed">Sort by packed status</option>
+          <option value="description">Sort alphapticly </option>
+          <option value="packed">Sort by packed items</option>
         </select>
-        <button onClick={onClearList}>Clear list</button>
+        <button onClick={onClearList}> Clear all list </button>
       </div>
     </div>
   );
