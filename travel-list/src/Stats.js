@@ -14,9 +14,9 @@ export default function Stats({ items }) {
     <footer className="stats">
       {" "}
       <em>
-        {" "}
-        You have {numItems} items in your bag, {numPacked} packed ({percentage}
-        %)
+        {percentage === 100
+          ? "You got everything! Ready to go ✈️"
+          : `You have ${numItems} items in your bag, ${numPacked} packed (${percentage}%)`}
       </em>{" "}
     </footer>
   );
