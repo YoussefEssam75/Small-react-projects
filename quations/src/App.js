@@ -1,7 +1,5 @@
 import "./styles.css";
 import React from "react";
-import { useState } from "react";
-
 const faqs = [
   {
     title: "Where are these chairs assembled?",
