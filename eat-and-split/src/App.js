@@ -21,6 +21,12 @@ const initialFriends = [
 ];
 
 
+
+function Button({children , onClick}) {
+  return ( 
+  <button className="button" onClick={onClick}>{children}</button>);
+}
+
 export default function App( ) {
 const[friends, setFriends] = useState(initialFriends);
 const[showAddFriend, setShowAddFriend] = useState(false);
@@ -39,6 +45,7 @@ function handleSelection (friend){
   setSelectedFriend((cur) => (cur?.id ===friend.id? null : friend));
   setShowAddFriend(false)
 }
+
 function handleSplitBill(value) {
     setFriends((friends) =>
       friends.map((friend) =>
@@ -71,7 +78,7 @@ function handleSplitBill(value) {
 }
 
 
-function FriendsList({friends ,onSelection , selectedFriend}) {
+function FriendsList({friends , onSelection , selectedFriend}) {
   return (
     <ul>
       {friends.map((friend) => (
@@ -94,12 +101,12 @@ function Friend ({friend , onSelection , selectedFriend}) {
 
     {friend.balance < 0 && (
       <p className="red">
-        You owe {friend.name} ${Math.abs(friend.balance)}
+        You owe {friend.name} {Math.abs(friend.balance)}$
       </p>
     )}
     {friend.balance > 0 && (
       <p className="green">
-        {friend.name} owes you ${friend.balance}
+        {friend.name} owes you ${Math.abs(friend.balance)}
       </p>
     )}
     {friend.balance === 0 && <p>You and {friend.name} are tied </p>}
@@ -108,12 +115,10 @@ function Friend ({friend , onSelection , selectedFriend}) {
  
 }
 
-function Button({children , onClick}) {
-  return <button className="button" onClick={onClick}>{children}</button>;
-}
 
 
-function FormAddFriend(onAddFriend) {
+
+function FormAddFriend({onAddFriend}) {
   const[name, setName] = useState('');
   const[image, setImage] = useState('https://i.pravatar.cc/48');
 
@@ -129,21 +134,32 @@ function FormAddFriend(onAddFriend) {
       balance:0,
       id,
     };
-    onAddFriend.onAddFriend(newFriend);
+    onAddFriend(newFriend);
+
     setName('');
     setImage('https://i.pravatar.cc/48');
     
   }
 
-  return <div>
+  return (
     <form className="form-add-friend" onSubmit={handleSubmit}>
       <label> >Friend Name</label>
-      <input type="text"  value={name} onChange={e=>setName(e.target.value)}/>
+
+      <input 
+      type="text"  
+      value={name}
+      onChange={(e)=>setName(e.target.value)}
+      />
+
       <label> >Image URL</label>
-      <input type="text" value={image} onChange={e=>setImage(e.target.value)}/>
+      <input 
+      type="text" 
+      value={image} 
+      onChange={(e)=>setImage(e.target.value)}/>
+
       <Button> Add </Button>
     </form>
-  </div>;
+  );
 }
 
 function SplitBillForm({selectedFriend , onSplitBill}) {
@@ -156,7 +172,7 @@ function SplitBillForm({selectedFriend , onSplitBill}) {
     e.preventDefault();
 
     if (!bill || !paidByUser) return;
-    onSplitBill(whoIsPaying === "user" ? paidByFriend : -paidByUser);
+    onSplitBill(whoIsPaying === "user" ? paidByFriend : paidByUser);
   }
 
   return <div>
@@ -173,9 +189,11 @@ function SplitBillForm({selectedFriend , onSplitBill}) {
       <input 
         type = "text"
         value = {paidByUser}
-        onchange = {(e)=>setPaidByUser(Number(e.target.value)>bill?paidByUser : Number(e.target.value))}
+        onChange = {(e)=>
+          setPaidByUser(
+            Number(e.target.value) > bill ? paidByUser : Number(e.target.value))}
       />
-
+  
       <label> > {selectedFriend.name} Expense</label>
       <input 
         type="text"
@@ -185,12 +203,14 @@ function SplitBillForm({selectedFriend , onSplitBill}) {
       <label> > Who is paying the bill</label>
       <select
         value = {whoIsPaying}
-        onchange = {(e)=>setWhoIsPaying(e.target.value)}
+        onChange = {(e)=>setWhoIsPaying(e.target.value)}
       >
         <option value="you">You</option>
         <option value="friend">{selectedFriend.name}</option>
       </select>
+
       <Button> Split Bill</Button>
     </form>
   </div>;
 }
+ 
