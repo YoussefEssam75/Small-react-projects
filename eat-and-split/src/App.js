@@ -27,24 +27,29 @@ function Button({children , onClick}) {
   <button className="button" onClick={onClick}>{children}</button>);
 }
 
+
 export default function App( ) {
-const[friends, setFriends] = useState(initialFriends);
-const[showAddFriend, setShowAddFriend] = useState(false);
-const[selectedFriend,setSelectedFriend]=useState(null)
+  const[friends, setFriends] = useState(initialFriends);
+  const[showAddFriend, setShowAddFriend] = useState(false);
+  const[selectedFriend,setSelectedFriend]=useState(null)
+
 
 function handleShowAddFriend() {
   setShowAddFriend((show) => !show);
 } 
+
 
 function handleAddFriend (friend) {
   setFriends((friends) => [...friends, friend]);
   setShowAddFriend(false);
 }
 
+
 function handleSelection (friend){
   setSelectedFriend((cur) => (cur?.id ===friend.id? null : friend));
   setShowAddFriend(false)
 }
+
 
 function handleSplitBill(value) {
     setFriends((friends) =>
@@ -67,7 +72,7 @@ function handleSplitBill(value) {
             onSelection={handleSelection} 
           />
 
-          {showAddFriend &&   <FormAddFriend onAddFriend={handleAddFriend} />}
+            {showAddFriend &&   <FormAddFriend onAddFriend={handleAddFriend} />}
 
           <Button onClick={handleShowAddFriend}> {showAddFriend ? 'Close' : 'Add Friend'}</Button>
 
@@ -95,23 +100,33 @@ function FriendsList({friends , onSelection , selectedFriend}) {
 function Friend ({friend , onSelection , selectedFriend}) {
   const isSelected=selectedFriend?.id=== friend.id;
 
-  return <li className={isSelected? 'selected':''} >
-    <img src={friend.image} alt={friend.name} />
-    <h3>{friend.name}</h3>
+  return (
+    <li className={isSelected? 'selected':''} >
+      <img src={friend.image} alt={friend.name} />
+      <h3>{friend.name}</h3>
 
-    {friend.balance < 0 && (
-      <p className="red">
-        You owe {friend.name} {Math.abs(friend.balance)}$
-      </p>
-    )}
-    {friend.balance > 0 && (
-      <p className="green">
-        {friend.name} owes you ${Math.abs(friend.balance)}
-      </p>
-    )}
-    {friend.balance === 0 && <p>You and {friend.name} are tied </p>}
-    <Button onClick={()=>onSelection(friend)}>{isSelected? 'close':"select"}</Button>
-    </li>;
+      {friend.balance < 0 && (
+          <p className="red">
+            You owe {friend.name} {Math.abs(friend.balance)}$
+          </p>
+        )
+      }
+
+      {friend.balance > 0 && (
+          <p className="green">
+            {friend.name} owes you ${Math.abs(friend.balance)}
+          </p>
+        )
+      }
+    
+      {friend.balance === 0 && 
+        <p>
+          You and {friend.name} are tied 
+        </p>}
+
+      <Button onClick={()=>onSelection(friend)}>{isSelected? 'close':"select"}</Button>
+    </li>
+  );
  
 }
 
