@@ -1,5 +1,5 @@
 import "./App.css";
 
 export default function App() {
-  return <h1>Hi lovyy</h1>;
+  function products() {}
 }
