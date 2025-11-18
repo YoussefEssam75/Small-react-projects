@@ -143,19 +143,19 @@ function FormAddFriend({onAddFriend}) {
 
   return (
     <form className="form-add-friend" onSubmit={handleSubmit}>
-      <label> >Friend Name</label>
+      <label> > Friend Name</label>
 
       <input 
-      type="text"  
-      value={name}
-      onChange={(e)=>setName(e.target.value)}
+        type="text"  
+        value={name}
+        onChange={(e)=>setName(e.target.value)}
       />
 
-      <label> >Image URL</label>
+      <label> > Image URL</label>
       <input 
-      type="text" 
-      value={image} 
-      onChange={(e)=>setImage(e.target.value)}/>
+        type="text" 
+        value={image} 
+        onChange={(e)=>setImage(e.target.value)}/>
 
       <Button> Add </Button>
     </form>
@@ -191,7 +191,7 @@ function SplitBillForm({selectedFriend , onSplitBill}) {
         value = {paidByUser}
         onChange = {(e)=>
           setPaidByUser(
-            Number(e.target.value) > bill ? paidByUser : Number(e.target.value))}
+          Number(e.target.value) > bill ? paidByUser : Number(e.target.value))}
       />
   
       <label> > {selectedFriend.name} Expense</label>
